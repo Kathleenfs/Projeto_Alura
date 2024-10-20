@@ -1,9 +1,14 @@
 package br.com.alura.ProjetoAlura.user;
 
-import br.com.alura.ProjetoAlura.util.EncryptUtil;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import br.com.alura.ProjetoAlura.registration.Registration;
+import br.com.alura.ProjetoAlura.util.EncryptUtil;
+
+
 
 @Entity
 public class User {
@@ -31,7 +36,21 @@ public class User {
         this.password = EncryptUtil.toMD5(password);
     }
 
-    public LocalDateTime getCreatedAt() {
+    
+    @OneToMany(mappedBy = "user")
+    private List<Registration>  registrations;
+    
+    
+    
+    public List<Registration> getRegistrations() {
+		return registrations;
+	}
+
+	public void setRegistrations(List<Registration> registrations) {
+		this.registrations = registrations;
+	}
+
+	public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -42,8 +61,14 @@ public class User {
     public String getEmail() {
         return email;
     }
+    
+    
 
-    public Role getRole() {
+    public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Role getRole() {
         return role;
     }
 
