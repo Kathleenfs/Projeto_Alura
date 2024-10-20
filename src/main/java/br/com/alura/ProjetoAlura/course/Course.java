@@ -1,13 +1,20 @@
-package br.com.alura.ProjetoAlura.course;
+ package br.com.alura.ProjetoAlura.course;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import br.com.alura.ProjetoAlura.registration.Registration;
+
+
+
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -31,11 +38,25 @@ public class Course {
 	
 	 @PrePersist
 	    public void prePersist() {
-	        this.status = "ACTIVE"; 
+	        this.status = "ACTIVE";  
 	        
 	    }
-	
 	 
+	 @OneToMany(mappedBy = "course")
+	    private List<Registration>  registrations;
+	 
+
+
+	public List<Registration> getRegistrations() {
+		return registrations;
+	}
+
+
+	public void setRegistrations(List<Registration> registrations) {
+		this.registrations = registrations;
+	}
+
+
 	public Course() {
 	}
 
