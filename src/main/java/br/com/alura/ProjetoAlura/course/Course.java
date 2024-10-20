@@ -18,7 +18,7 @@ public class Course {
 
 	private String name;
 
-	@Column(length = 10)
+	@Column(length = 10, unique = true)
 	private String code;
 
 	private String instructorEmail;

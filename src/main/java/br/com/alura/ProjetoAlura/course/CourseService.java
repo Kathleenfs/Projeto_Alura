@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.projeto.course.Course;
-import com.example.projeto.course.NewCourseDTO;
-import com.example.projeto.courseRepository.CourseRepository;
+
 
 @Service
 public class CourseService {
@@ -22,7 +20,18 @@ public class CourseService {
 			course.setCode(newCourse.getCode());
 			course.setInstructorEmail(newCourse.getInstructorEmail());
 			 return courseRepository.save(course);
-	   }   
+	   }  
+	    
+	    public Optional<Course> deactivateCourse(String code) {
+	        Optional<Course> courseOptional = courseRepository.findByCode(code);
+	        if (courseOptional.isPresent()) {
+	            Course course = courseOptional.get();
+	            course.setStatus("inactive");
+	            course.setInactivationDate(LocalDate.now()); 
+	            courseRepository.save(course); 
+	        }
+	        return courseOptional;
+	    }
 }
 
 
