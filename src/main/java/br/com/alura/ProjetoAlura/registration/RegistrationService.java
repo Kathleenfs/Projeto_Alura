@@ -1,15 +1,23 @@
 package br.com.alura.ProjetoAlura.registration;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.alura.ProjetoAlura.NewRegistrationDTO;
+import br.com.alura.ProjetoAlura.Registration;
+import br.com.alura.ProjetoAlura.RegistrationReportItem;
+import br.com.alura.ProjetoAlura.RegistrationRepository;
+
 import br.com.alura.ProjetoAlura.course.Course;
 import br.com.alura.ProjetoAlura.course.CourseRepository;
 import br.com.alura.ProjetoAlura.user.UserRepository;
+import br.com.alura.ProjetoAlura.user.User;
 
 
 @Service
@@ -53,5 +61,26 @@ public class RegistrationService {
         registrationRepository.save(registration);
         return "Student successfully enrolled!";
         }
+    
+    public List<RegistrationReportItem> getCoursesWithMostRegistrations() {
+        List<Object[]> results = registrationRepository.findCoursesWithMostRegistrations();
+        List<RegistrationReportItem> report = new ArrayList<>();
 
-}
+        for (Object[] result : results) {
+            String courseName = (String) result[0];
+            String courseCode = (String) result[1];
+            String instructorName = (String) result[2];
+            String instructorEmail = (String) result[3];
+            Long totalRegistrations = ((Number) result[4]).longValue();
+
+            report.add(new RegistrationReportItem(
+                courseName,
+                courseCode,
+                instructorName,
+                instructorEmail,
+                totalRegistrations
+            ));
+            }
+        return report;
+        }
+  }
