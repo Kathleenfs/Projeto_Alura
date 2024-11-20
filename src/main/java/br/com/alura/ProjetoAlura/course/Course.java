@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 import jakarta.persistence.Column;
 
 import java.time.LocalDate;
@@ -25,8 +26,10 @@ public class Course {
 
 	private String name;
 
-	@Column(length = 10, unique = true)
+	@Column(unique = true, nullable = false)
+    @Pattern(regexp = "^[a-z]+(-[a-z]+)*$")
 	private String code;
+
 
 	private String instructorEmail;
 

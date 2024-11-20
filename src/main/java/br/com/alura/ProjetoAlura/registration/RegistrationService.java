@@ -9,10 +9,6 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.alura.ProjetoAlura.NewRegistrationDTO;
-import br.com.alura.ProjetoAlura.Registration;
-import br.com.alura.ProjetoAlura.RegistrationReportItem;
-import br.com.alura.ProjetoAlura.RegistrationRepository;
 
 import br.com.alura.ProjetoAlura.course.Course;
 import br.com.alura.ProjetoAlura.course.CourseRepository;
@@ -46,7 +42,6 @@ public class RegistrationService {
 
        
         Optional<User>userOptional = userRepository.findByEmail(newRegistrationDTO.getStudentEmail());
-        
         User user  = userOptional.get();
 
       
